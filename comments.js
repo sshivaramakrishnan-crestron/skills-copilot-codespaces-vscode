@@ -1,41 +1,57 @@
 //create webserver
-// var http = require('http');
-// var fs = require('fs');
-// var url = require('url');
-// var path = require('path');
-// var port = 8081;
+//create comments array
+//create a route for comments
+//create a route for create comments
+//create a route for delete comments
 
-// var server = http.createServer(function(req, res) {
-//     var uri = url.parse(req.url).pathname;
-//     var filename = path.join(process.cwd(), uri);
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const PORT = 3000;
 
-//     fs.exists(filename, function(exists) {
-//         if(!exists) {
-//             res.writeHead(404, {'Content-Type': 'text/plain'});
-//             res.write('404 Not Found\n');
-//             res.end();
-//             return;
-//         }
+let comments = [
+    {
+        id: 1,
+        name: 'John Doe',
+        comment: 'Hello'
+    },
+    {
+        id: 2,
+        name: 'Jane Doe',
+        comment: 'Hi'
+    }
+];
 
-//         if(fs.statSync(filename).isDirectory()) {
-//             filename += '/index.html';
-//         }
+app.use(bodyParser.json());
 
-//         fs.readFile(filename, 'binary', function(err, file) {
-//             if(err) {
-//                 res.writeHead(500, {'Content-Type': 'text/plain'});
-//                 res.write(err + '\n');
-//                 res.end();
-//                 return;
-//             }
+//get all comments
+app.get('/comments', (req, res) => {
+    res.json(comments);
+});
 
-//             res.writeHead(200);
-//             res.write(file, 'binary');
-//             res.end();
-//         });
-//     });
-// });
+//create a new comment
+app.post('/comments', (req, res) => {
+    const comment = req.body;
+    comments.push(comment);
+    res.json(comment);
+});
 
-// server.listen(port, function() {
-//     console.log('Server listening on: http://localhost:%s', port);
-// });
+//delete a comment
+app.delete('/comments/:id', (req, res) => {
+    const {id} = req.params;
+    comments = comments.filter(comment => {
+        return comment.id !== Number(id);
+    });
+    res.json({
+        message: `Deleted comment with id ${id}`
+    });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
+//Test with Postman
+//GET http://localhost:3000/comments
+//POST http://localhost:3000/comments
+//DELETE http://localhost:3000/comments/1
