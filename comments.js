@@ -55,3 +55,27 @@ app.listen(PORT, () => {
 //GET http://localhost:3000/comments
 //POST http://localhost:3000/comments
 //DELETE http://localhost:3000/comments/1
+//GET http://localhost:3000/comments
+//GET http://localhost:3000/comments/2
+//GET http://localhost:3000/comments/3
+//DELETE http://localhost:3000/comments/2
+//GET http://localhost:3000/comments
+//GET http://localhost:3000/comments/2
+//GET http://localhost:3000/comments/3
+
+//Test with CURL
+//curl http://localhost:3000/comments
+//curl -X POST -H "Content-Type: application/json" -d "{\"id\": 3, \"name\": \"Alice\", \"comment\": \"Hey\"}" http://localhost:3000/comments
+//curl -X DELETE http://localhost:3000/comments/1
+//curl http://localhost:3000/comments
+//curl http://localhost:3000/comments/2
+//curl http://localhost:3000/comments/3
+//curl -X DELETE http://localhost:3000/comments/2
+//curl http://localhost:3000/comments
+//curl http://localhost:3000/comments/2
+//curl http://localhost:3000/comments/3
+
+//Test with Fetch API
+//fetch('http://localhost:3000/comments')
+//.then(res => res.json())
+//.then(data => console.log(data
